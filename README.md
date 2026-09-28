@@ -35,10 +35,10 @@ par ce dépôt.
 3. Accorder l'**accès complet** : c'est le seul niveau qui permet de lire la
    liste des pages du document. Le widget n'écrit rien dans les tables.
 
-URL GitHub Pages, une fois le dépôt publié :
+URL GitHub Pages :
 
 ```text
-https://<compte>.github.io/<depot>/page-accueil.html
+https://hantaranui.github.io/page-accueil-partenariat-simplifi-/page-accueil.html
 ```
 
 ## Structure
