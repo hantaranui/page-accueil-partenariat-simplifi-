@@ -10,7 +10,7 @@ const assert = require("node:assert/strict");
 const {loadWidget} = require("./helpers/widget");
 
 const widget = loadWidget();
-const DOC = "https://grist.example.org/o/equipe/DocTest";
+const DOC = "https://grist.example.org/o/equipe/doc/DocTest";
 const PAGES = [
   {id: 35, name: "Dashboard"},
   {id: 38, name: "Page publique"},
@@ -23,13 +23,22 @@ const plain = (value) => JSON.parse(JSON.stringify(value));
 const links = (options, pages = PAGES, docUrl = DOC) =>
   Object.fromEntries(plain(widget.buildLinks(options, pages, docUrl)).map((link) => [link.key, link]));
 
+// Reprise de la lecture du chemin par Grist (decodeUrl, app/common/gristUrls.ts
+// de grist-core) : des paires cle/valeur, apres le prefixe d'organisation.
+function lireCommeGrist(url) {
+  const parts = new URL(url).pathname.slice(1).split("/");
+  const paires = new Map();
+  for (let i = 0; i < parts.length; i += 2) paires.set(parts[i], parts[i + 1]);
+  return {org: paires.get("o"), doc: paires.get("doc"), page: paires.get("p")};
+}
+
 test("l'adresse du document se deduit de celle de son API", () => {
   assert.equal(widget.docUrlFromBaseUrl("https://docs.getgrist.com/api/docs/Abc123"),
-    "https://docs.getgrist.com/Abc123");
+    "https://docs.getgrist.com/doc/Abc123");
   assert.equal(widget.docUrlFromBaseUrl("https://grist.example.org/o/equipe/api/docs/Abc123/"),
-    "https://grist.example.org/o/equipe/Abc123", "le prefixe d'organisation est garde");
+    "https://grist.example.org/o/equipe/doc/Abc123", "le prefixe d'organisation est garde");
   assert.equal(widget.docUrlFromBaseUrl("https://h.org/api/docs/Abc~fork~u5"),
-    "https://h.org/Abc~fork~u5", "une copie de travail reste adressable");
+    "https://h.org/doc/Abc~fork~u5", "une copie de travail reste adressable");
   for (const invalide of [undefined, null, "", "https://h.org/Abc123", "/api/docs/Abc"]) {
     assert.equal(widget.docUrlFromBaseUrl(invalide), null, `${invalide} n'est pas une adresse d'API`);
   }
@@ -42,6 +51,20 @@ test("les pages se lisent dans l'ordre du document, adressees par leur vue", () 
   assert.deepEqual(plain(pages), [{id: 35, name: "Dashboard"}, {id: 38, name: "Page publique"}],
     "une page sans vue connue est ecartee");
   assert.deepEqual(plain(widget.listPages({}, {})), []);
+});
+
+test("Grist retrouve le document et la page dans chaque lien", () => {
+  // Sans le mot « doc », Grist lisait « /<id>/p/38 » comme un document nomme « p »
+  // et ouvrait sa page par defaut : les deux cartes menaient au tableau de bord.
+  for (const baseUrl of ["https://docs.getgrist.com/api/docs/Abc123",
+                         "https://grist.example.org/o/equipe/api/docs/Abc123"]) {
+    const {dashboard, soutien} = links(null, PAGES, widget.docUrlFromBaseUrl(baseUrl));
+    assert.deepEqual(lireCommeGrist(dashboard.url).doc, "Abc123");
+    assert.equal(lireCommeGrist(dashboard.url).page, "35");
+    assert.equal(lireCommeGrist(soutien.url).page, "38");
+  }
+  assert.equal(lireCommeGrist(links(null, PAGES, widget.docUrlFromBaseUrl(
+    "https://grist.example.org/o/equipe/api/docs/Abc123")).soutien.url).org, "equipe");
 });
 
 test("sans configuration, les cartes visent les pages de meme nom", () => {
@@ -97,7 +120,7 @@ test("les cartes recoivent leur lien une fois le document lu", async () => {
   const carte = w.document.getElementById("card-dashboard");
   assert.equal(carte.getAttribute("href"), null, "pas de lien avant la lecture");
   await w.load();
-  assert.equal(carte.getAttribute("href"), "https://h.org/Abc123/p/35");
+  assert.equal(carte.getAttribute("href"), "https://h.org/doc/Abc123/p/35");
   assert.equal(carte.classList.contains("ds-card-link-disabled"), false);
   assert.equal(w.document.getElementById("status-dashboard").textContent, "");
 });

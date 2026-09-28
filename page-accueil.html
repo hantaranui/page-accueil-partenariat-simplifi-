@@ -204,9 +204,14 @@ const state = {
 // son adresse : window.top.location est illisible depuis une autre origine, et
 // document.referrer peut etre reduit a l'origine seule. Le prefixe eventuel
 // d'organisation (« /o/<equipe> ») est conserve tel quel.
+//
+// Grist lit le chemin par paires cle/valeur. Sans le mot « doc », il prend
+// l'identifiant pour la cle et ce qui suit pour le nom du document : dans
+// « /<id>/p/38 », « p » devenait ce nom, le numero de page etait perdu et Grist
+// ouvrait sa page par defaut.
 function docUrlFromBaseUrl(baseUrl) {
   const match = /^(https?:\/\/[^?#]*?)\/api\/docs\/([^/?#]+)\/?$/.exec(String(baseUrl || ""));
-  return match ? `${match[1]}/${match[2]}` : null;
+  return match ? `${match[1]}/doc/${match[2]}` : null;
 }
 
 // Grist renvoie ses tables par colonnes. L'adresse d'une page (« /p/<n> ») porte
