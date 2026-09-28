@@ -102,6 +102,38 @@ a.home-card:not([href]) {
 }
 .home-card-status:empty { display: none; }
 
+/* Panneau de configuration : il remplace les cartes le temps du reglage, sur le
+   meme fond blanc qu'elles. */
+.home-config {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: var(--ft-color-background-neutral-light);
+  border: 1px solid var(--ft-color-border-neutral-default);
+  border-radius: .5rem;
+}
+
+.home-config-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ft-color-text-content-strong);
+}
+
+.home-config-help {
+  color: var(--ft-color-text-content-weak);
+}
+
+.home-config-field {
+  margin-bottom: 1rem;
+}
+
+.home-config-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
 @media (max-width: 600px) {
   .home-banner {
     grid-template-columns: 1fr 1fr;
@@ -118,4 +150,5 @@ a.home-card:not([href]) {
   .home-main { padding: 1.5rem 1rem; }
   .home-cards { grid-template-columns: 1fr; gap: 1rem; }
   a.home-card { min-height: 6rem; }
+  .home-config { padding: 1rem; }
 }

@@ -17,7 +17,7 @@
     </header>
 
     <main class="home-main">
-      <nav class="home-cards" aria-label="Accès rapides">
+      <nav class="home-cards" id="cards" aria-label="Accès rapides">
         <a class="home-card" id="card-dashboard" target="_top">
           <span class="home-card-title">Tableau de bord des actions</span>
           <span class="home-card-status" id="status-dashboard"></span>
@@ -27,6 +27,25 @@
           <span class="home-card-status" id="status-soutien"></span>
         </a>
       </nav>
+
+      <section class="home-config" id="config" hidden aria-labelledby="config-title">
+        <h2 class="home-config-title" id="config-title">Cible des cartes</h2>
+        <p class="home-config-help">Choisissez la page du document qu'ouvre chaque carte. Sans choix, la carte vise la page qui porte le nom indiqué.</p>
+        <form id="config-form">
+          <div class="home-config-field">
+            <label class="form-label" for="config-dashboard">Tableau de bord des actions</label>
+            <select class="form-control" id="config-dashboard"></select>
+          </div>
+          <div class="home-config-field">
+            <label class="form-label" for="config-soutien">Page publique de soutien</label>
+            <select class="form-control" id="config-soutien"></select>
+          </div>
+          <div class="home-config-actions">
+            <button class="btn btn-primary" type="submit"><span class="btn-content">Enregistrer</span></button>
+            <button class="btn btn-secondary" type="button" id="config-cancel"><span class="btn-content">Annuler</span></button>
+          </div>
+        </form>
+      </section>
     </main>
 
     <script src="script.js"></script>

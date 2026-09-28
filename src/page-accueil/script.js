@@ -85,6 +85,54 @@ function render() {
   }
 }
 
+// Le panneau ne s'ouvre que par le bouton « Ouvrir la configuration » de Grist,
+// reserve a qui peut modifier le document : les lecteurs n'en voient rien.
+function openConfig() {
+  for (const {key, defaultName} of TARGETS) {
+    const select = document.getElementById(`config-${key}`);
+    select.innerHTML = "";
+    // La valeur vide ne fige aucune page : la carte continue de viser la page
+    // de son nom par defaut, ce qui suit le document d'une copie a l'autre.
+    select.appendChild(makeOption("", `Par défaut : page « ${defaultName} »`));
+    for (const page of state.pages) select.appendChild(makeOption(String(page.id), page.name));
+
+    const option = state.options && state.options[key];
+    const {page} = resolveTarget(option, state.pages, defaultName);
+    select.value = option && page ? String(page.id) : "";
+  }
+  document.getElementById("cards").hidden = true;
+  document.getElementById("config").hidden = false;
+  document.getElementById("config-dashboard").focus();
+}
+
+function closeConfig() {
+  document.getElementById("config").hidden = true;
+  document.getElementById("cards").hidden = false;
+}
+
+// textContent et non innerHTML : un nom de page vient du document et peut
+// contenir n'importe quoi.
+function makeOption(value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  return option;
+}
+
+async function saveConfig(event) {
+  event.preventDefault();
+  const options = {};
+  for (const {key} of TARGETS) {
+    const id = document.getElementById(`config-${key}`).value;
+    const page = state.pages.find((item) => String(item.id) === id);
+    // Le nom est garde avec le numero pour le cas ou la page serait supprimee
+    // puis recreee : le numero change alors, pas le nom.
+    if (page) options[key] = {pageId: page.id, pageName: page.name};
+  }
+  await grist.setOptions(options);
+  closeConfig();
+}
+
 async function load() {
   // Lire la liste des pages suppose l'acces complet : avec un acces limite a une
   // table, les tables de metadonnees sont refusees.
@@ -108,7 +156,10 @@ async function load() {
   render();
 }
 
-grist.ready({requiredAccess: "full"});
+document.getElementById("config-form").addEventListener("submit", saveConfig);
+document.getElementById("config-cancel").addEventListener("click", closeConfig);
+
+grist.ready({requiredAccess: "full", onEditOptions: openConfig});
 grist.onOptions((options) => {
   state.options = options;
   render();
