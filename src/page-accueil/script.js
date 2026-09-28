@@ -81,6 +81,9 @@ function render() {
     const card = document.getElementById(`card-${key}`);
     if (link && link.url) card.setAttribute("href", link.url);
     else card.removeAttribute("href");
+    // Seule une cible introuvable desactive la carte : pendant le chargement,
+    // elle garde son aspect normal pour ne pas clignoter.
+    card.classList.toggle("ds-card-link-disabled", Boolean(link && !link.url));
     document.getElementById(`status-${key}`).textContent = link ? statusMessage(link) : "";
   }
 }

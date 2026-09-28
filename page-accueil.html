@@ -45,11 +45,11 @@ body {
   height: 72px;
 }
 
+/* Taille, police et graisse viennent de .t1 ; on retire seulement sa marge
+   basse, faite pour un titre de page et non pour un bandeau. */
 .home-title {
   margin: 0;
   text-align: center;
-  font-size: 1.75rem;
-  font-weight: 700;
   color: var(--ft-color-text-content-strong);
 }
 
@@ -65,52 +65,12 @@ body {
   margin: 0 auto;
 }
 
-/* « a. » et non « . » seul : la regle de lien du design system,
-   a:not(.btn,.dropdown-item,.nav-link), pese une classe et un element. */
-a.home-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: .5rem;
-  min-height: 9rem;
-  padding: 1.5rem;
-  background: var(--ft-color-background-neutral-light);
-  border: 1px solid var(--ft-color-border-neutral-default);
-  border-radius: .5rem;
-  color: var(--ft-color-text-primary-default);
-  text-decoration: none;
-}
-
-/* Le survol ne change ni le fond ni l'encre : il epaissit le cadre et souligne
-   le titre, ce qui garde le contraste du texte sur blanc. */
-a.home-card[href]:hover {
-  border-color: var(--ft-color-border-primary-default);
-  box-shadow: 0 0 0 1px var(--ft-color-border-primary-default);
-  color: var(--ft-color-text-primary-default);
-}
-a.home-card[href]:hover .home-card-title { text-decoration: underline; }
-
-a.home-card:focus-visible {
-  outline: 3px solid var(--ft-color-border-primary-default);
-  outline-offset: 3px;
-}
-
-.home-card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-/* Carte sans cible : rien n'y ressemble a un lien actif. */
-a.home-card:not([href]) {
-  color: var(--ft-color-text-content-weak);
-  cursor: default;
-}
-
+/* Les cartes sont le composant Card link du design system : on ne regle ici que
+   la ligne d'etat, qui n'existe pas chez lui. Elle herite de l'encre du corps de
+   carte, que le design system passe au gris quand la carte est desactivee. */
 .home-card-status {
+  margin-top: .5rem;
   font-size: .875rem;
-  color: var(--ft-color-text-content-weak);
 }
 .home-card-status:empty { display: none; }
 
@@ -126,8 +86,6 @@ a.home-card:not([href]) {
 }
 
 .home-config-title {
-  font-size: 1.25rem;
-  font-weight: 700;
   color: var(--ft-color-text-content-strong);
 }
 
@@ -157,11 +115,9 @@ a.home-card:not([href]) {
   .home-title {
     grid-column: 1 / -1;
     grid-row: 2;
-    font-size: 1.5rem;
   }
   .home-main { padding: 1.5rem 1rem; }
   .home-cards { grid-template-columns: 1fr; gap: 1rem; }
-  a.home-card { min-height: 6rem; }
   .home-config { padding: 1rem; }
 }
 </style>
@@ -169,24 +125,42 @@ a.home-card:not([href]) {
   <body class="outil-agent">
     <header class="home-banner">
       <img class="home-logo" src="https://cdn.francetravail.fr/studio/logos/marque/Logo_France_Travail_RVB_Horizontal_Coul_Positif.svg" alt="France Travail">
-      <h1 class="home-title">Partenariat simplifié</h1>
+      <h1 class="t1 home-title">Partenariat simplifié</h1>
       <img class="home-logo home-logo-clubs" src="https://lesclubs-sportifs-engages.francetravail.fr/img/logo-lcse.svg" alt="Les clubs sportifs engagés">
     </header>
 
     <main class="home-main">
       <nav class="home-cards" id="cards" aria-label="Accès rapides">
-        <a class="home-card" id="card-dashboard" target="_top">
-          <span class="home-card-title">Tableau de bord des actions</span>
-          <span class="home-card-status" id="status-dashboard"></span>
+        <a class="ds-card-link ds-card-link-default" id="card-dashboard" target="_top">
+          <span class="ds-card-link-decoration">
+            <span class="ds-card-link-decoration-container">
+              <span aria-hidden="true" class="icon icon-dashboard"></span>
+            </span>
+          </span>
+          <span class="ds-card-link-body">
+            <span class="ds-card-link-title">Tableau de bord des actions</span>
+            <span class="ds-card-link-content"><span class="sr-only">:&nbsp;</span>Suivre et filtrer les actions d'insertion par le sport</span>
+            <span class="home-card-status" id="status-dashboard"></span>
+          </span>
+          <span aria-hidden="true" class="icon icon-chevron-r"></span>
         </a>
-        <a class="home-card" id="card-soutien" target="_top">
-          <span class="home-card-title">Page publique de soutien</span>
-          <span class="home-card-status" id="status-soutien"></span>
+        <a class="ds-card-link ds-card-link-default" id="card-soutien" target="_top">
+          <span class="ds-card-link-decoration">
+            <span class="ds-card-link-decoration-container">
+              <span aria-hidden="true" class="icon icon-handshake"></span>
+            </span>
+          </span>
+          <span class="ds-card-link-body">
+            <span class="ds-card-link-title">Page publique de soutien</span>
+            <span class="ds-card-link-content"><span class="sr-only">:&nbsp;</span>Voir la page de soutien ouverte au public</span>
+            <span class="home-card-status" id="status-soutien"></span>
+          </span>
+          <span aria-hidden="true" class="icon icon-chevron-r"></span>
         </a>
       </nav>
 
       <section class="home-config" id="config" hidden aria-labelledby="config-title">
-        <h2 class="home-config-title" id="config-title">Cible des cartes</h2>
+        <h2 class="t2 home-config-title" id="config-title">Cible des cartes</h2>
         <p class="home-config-help">Choisissez la page du document qu'ouvre chaque carte. Sans choix, la carte vise la page qui porte le nom indiqué.</p>
         <form id="config-form">
           <div class="home-config-field">
@@ -289,6 +263,9 @@ function render() {
     const card = document.getElementById(`card-${key}`);
     if (link && link.url) card.setAttribute("href", link.url);
     else card.removeAttribute("href");
+    // Seule une cible introuvable desactive la carte : pendant le chargement,
+    // elle garde son aspect normal pour ne pas clignoter.
+    card.classList.toggle("ds-card-link-disabled", Boolean(link && !link.url));
     document.getElementById(`status-${key}`).textContent = link ? statusMessage(link) : "";
   }
 }

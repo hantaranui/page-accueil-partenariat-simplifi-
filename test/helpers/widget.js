@@ -16,9 +16,18 @@ const EXPORTED = ["state", "TARGETS"];
 
 function makeElement() {
   const attributes = {};
+  const classes = new Set();
   return {
     textContent: "", hidden: false, value: "", innerHTML: "",
     attributes,
+    classList: {
+      contains: (name) => classes.has(name),
+      toggle(name, force) {
+        const on = force === undefined ? !classes.has(name) : Boolean(force);
+        if (on) classes.add(name); else classes.delete(name);
+        return on;
+      },
+    },
     setAttribute(name, value) { attributes[name] = String(value); },
     getAttribute(name) { return name in attributes ? attributes[name] : null; },
     removeAttribute(name) { delete attributes[name]; },

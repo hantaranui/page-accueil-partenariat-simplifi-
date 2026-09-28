@@ -86,16 +86,32 @@ Lanceur intégré de Node, sans dépendance. Les tests couvrent :
 
 ## Design system France Travail
 
-La page charge la feuille et l'autoloader du design system, avec le thème
-`outil-agent` du tableau de bord. Règles suivies :
+La page charge la feuille et l'autoloader du design system, dans l'univers
+« Outils agent » (classe `outil-agent` sur `<body>`), comme le tableau de bord.
+Composants et classes repris tels quels :
+
+- les cartes sont le composant **Card link** (`ds-card-link ds-card-link-default`),
+  avec ses icônes (`icon-dashboard`, `icon-handshake`, `icon-chevron-r`) et son
+  état désactivé (`ds-card-link-disabled`) quand la page visée est introuvable ;
+- les titres prennent `.t1` et `.t2`, qui fixent police, taille et graisse ;
+- le panneau de configuration utilise `form-label`, `form-control`,
+  `btn btn-primary` et `btn btn-secondary`.
+
+Un écart subsiste volontairement : le bandeau. L'en-tête agent du design system
+(`ft-header-agent`) n'affiche qu'un logo d'application et son nom, alignés à
+gauche ; il ne permet ni le logo France Travail, ni le titre centré entre les
+deux logos que demande la maquette.
+
+Règles suivies :
 
 - vérifier les noms de classes dans la feuille livrée par le CDN, jamais dans
-  les pages de composants, qui ne portent pas toujours les mêmes noms ;
-- ne jamais reprendre un de ses noms de classe : les nôtres portent toutes le
-  préfixe `home-`. L'inventaire de ses classes est gardé dans
-  `test/design-system-classes.txt` ; la commande pour le régénérer est en tête
-  de `test/styles.test.js` ;
-- ne pas colorer un texte posé sur un fond de couleur : les cartes restent sur
-  fond blanc, y compris au survol ;
+  les pages de composants, qui ne portent pas toujours les mêmes noms ni les
+  mêmes valeurs (la documentation annonce une graisse de 400 pour les titres, la
+  feuille applique 500) ;
+- ne jamais reprendre un de ses noms de classe pour une classe à soi : les
+  nôtres portent toutes le préfixe `home-`. L'inventaire de ses classes est gardé
+  dans `test/design-system-classes.txt` ; la commande pour le régénérer est en
+  tête de `test/styles.test.js` ;
+- ne pas colorer un texte posé sur un fond de couleur ;
 - contrastes mesurés sur les couleurs calculées par le navigateur : le plus
-  faible pour du texte est celui du titre d'une carte, 5,8:1.
+  faible pour du texte est celui d'une carte désactivée, 5,5:1.

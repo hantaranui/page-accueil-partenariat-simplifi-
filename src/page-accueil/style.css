@@ -35,11 +35,11 @@ body {
   height: 72px;
 }
 
+/* Taille, police et graisse viennent de .t1 ; on retire seulement sa marge
+   basse, faite pour un titre de page et non pour un bandeau. */
 .home-title {
   margin: 0;
   text-align: center;
-  font-size: 1.75rem;
-  font-weight: 700;
   color: var(--ft-color-text-content-strong);
 }
 
@@ -55,52 +55,12 @@ body {
   margin: 0 auto;
 }
 
-/* « a. » et non « . » seul : la regle de lien du design system,
-   a:not(.btn,.dropdown-item,.nav-link), pese une classe et un element. */
-a.home-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: .5rem;
-  min-height: 9rem;
-  padding: 1.5rem;
-  background: var(--ft-color-background-neutral-light);
-  border: 1px solid var(--ft-color-border-neutral-default);
-  border-radius: .5rem;
-  color: var(--ft-color-text-primary-default);
-  text-decoration: none;
-}
-
-/* Le survol ne change ni le fond ni l'encre : il epaissit le cadre et souligne
-   le titre, ce qui garde le contraste du texte sur blanc. */
-a.home-card[href]:hover {
-  border-color: var(--ft-color-border-primary-default);
-  box-shadow: 0 0 0 1px var(--ft-color-border-primary-default);
-  color: var(--ft-color-text-primary-default);
-}
-a.home-card[href]:hover .home-card-title { text-decoration: underline; }
-
-a.home-card:focus-visible {
-  outline: 3px solid var(--ft-color-border-primary-default);
-  outline-offset: 3px;
-}
-
-.home-card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-/* Carte sans cible : rien n'y ressemble a un lien actif. */
-a.home-card:not([href]) {
-  color: var(--ft-color-text-content-weak);
-  cursor: default;
-}
-
+/* Les cartes sont le composant Card link du design system : on ne regle ici que
+   la ligne d'etat, qui n'existe pas chez lui. Elle herite de l'encre du corps de
+   carte, que le design system passe au gris quand la carte est desactivee. */
 .home-card-status {
+  margin-top: .5rem;
   font-size: .875rem;
-  color: var(--ft-color-text-content-weak);
 }
 .home-card-status:empty { display: none; }
 
@@ -116,8 +76,6 @@ a.home-card:not([href]) {
 }
 
 .home-config-title {
-  font-size: 1.25rem;
-  font-weight: 700;
   color: var(--ft-color-text-content-strong);
 }
 
@@ -147,10 +105,8 @@ a.home-card:not([href]) {
   .home-title {
     grid-column: 1 / -1;
     grid-row: 2;
-    font-size: 1.5rem;
   }
   .home-main { padding: 1.5rem 1rem; }
   .home-cards { grid-template-columns: 1fr; gap: 1rem; }
-  a.home-card { min-height: 6rem; }
   .home-config { padding: 1rem; }
 }

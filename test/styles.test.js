@@ -23,8 +23,8 @@ const RESERVES = new Set(
 
 // Classe posee en tete de selecteur, donc redefinie pour tout le document.
 // « .home-banner .btn » ne compterait pas : ce serait notre contexte qui habille
-// un composant du design system, ce qui est legitime. « a.home-card » compte :
-// l'element ne change rien au fait que la classe est la notre.
+// un composant du design system, ce qui est legitime. « a.home-x » compterait :
+// l'element ne change rien au fait que la classe est en tete.
 function classesRedefinies(css) {
   const trouvees = new Set();
   const sansCommentaires = css.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -48,7 +48,7 @@ test("l'inventaire du design system est bien charge", () => {
 
 test("la feuille declare bien des classes en tete de selecteur", () => {
   const redefinies = classesRedefinies(CSS);
-  for (const nom of ["home-banner", "home-card", "home-title"]) {
+  for (const nom of ["home-banner", "home-cards", "home-title"]) {
     assert.ok(redefinies.has(nom), `.${nom} doit etre releve par l'analyse`);
   }
 });

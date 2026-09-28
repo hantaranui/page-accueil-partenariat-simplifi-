@@ -98,6 +98,7 @@ test("les cartes recoivent leur lien une fois le document lu", async () => {
   assert.equal(carte.getAttribute("href"), null, "pas de lien avant la lecture");
   await w.load();
   assert.equal(carte.getAttribute("href"), "https://h.org/Abc123/p/35");
+  assert.equal(carte.classList.contains("ds-card-link-disabled"), false);
   assert.equal(w.document.getElementById("status-dashboard").textContent, "");
 });
 
@@ -105,5 +106,7 @@ test("un acces refuse aux pages est signale sur les cartes", async () => {
   const w = loadWidget({docApi: {fetchTable: async () => { throw new Error("acces refuse"); }}});
   await w.load();
   assert.equal(w.document.getElementById("card-soutien").getAttribute("href"), null);
+  assert.ok(w.document.getElementById("card-soutien").classList.contains("ds-card-link-disabled"),
+    "une carte sans cible prend l'aspect desactive du design system");
   assert.match(w.document.getElementById("status-soutien").textContent, /accès complet/);
 });

@@ -12,24 +12,42 @@
   <body class="outil-agent">
     <header class="home-banner">
       <img class="home-logo" src="https://cdn.francetravail.fr/studio/logos/marque/Logo_France_Travail_RVB_Horizontal_Coul_Positif.svg" alt="France Travail">
-      <h1 class="home-title">Partenariat simplifié</h1>
+      <h1 class="t1 home-title">Partenariat simplifié</h1>
       <img class="home-logo home-logo-clubs" src="https://lesclubs-sportifs-engages.francetravail.fr/img/logo-lcse.svg" alt="Les clubs sportifs engagés">
     </header>
 
     <main class="home-main">
       <nav class="home-cards" id="cards" aria-label="Accès rapides">
-        <a class="home-card" id="card-dashboard" target="_top">
-          <span class="home-card-title">Tableau de bord des actions</span>
-          <span class="home-card-status" id="status-dashboard"></span>
+        <a class="ds-card-link ds-card-link-default" id="card-dashboard" target="_top">
+          <span class="ds-card-link-decoration">
+            <span class="ds-card-link-decoration-container">
+              <span aria-hidden="true" class="icon icon-dashboard"></span>
+            </span>
+          </span>
+          <span class="ds-card-link-body">
+            <span class="ds-card-link-title">Tableau de bord des actions</span>
+            <span class="ds-card-link-content"><span class="sr-only">:&nbsp;</span>Suivre et filtrer les actions d'insertion par le sport</span>
+            <span class="home-card-status" id="status-dashboard"></span>
+          </span>
+          <span aria-hidden="true" class="icon icon-chevron-r"></span>
         </a>
-        <a class="home-card" id="card-soutien" target="_top">
-          <span class="home-card-title">Page publique de soutien</span>
-          <span class="home-card-status" id="status-soutien"></span>
+        <a class="ds-card-link ds-card-link-default" id="card-soutien" target="_top">
+          <span class="ds-card-link-decoration">
+            <span class="ds-card-link-decoration-container">
+              <span aria-hidden="true" class="icon icon-handshake"></span>
+            </span>
+          </span>
+          <span class="ds-card-link-body">
+            <span class="ds-card-link-title">Page publique de soutien</span>
+            <span class="ds-card-link-content"><span class="sr-only">:&nbsp;</span>Voir la page de soutien ouverte au public</span>
+            <span class="home-card-status" id="status-soutien"></span>
+          </span>
+          <span aria-hidden="true" class="icon icon-chevron-r"></span>
         </a>
       </nav>
 
       <section class="home-config" id="config" hidden aria-labelledby="config-title">
-        <h2 class="home-config-title" id="config-title">Cible des cartes</h2>
+        <h2 class="t2 home-config-title" id="config-title">Cible des cartes</h2>
         <p class="home-config-help">Choisissez la page du document qu'ouvre chaque carte. Sans choix, la carte vise la page qui porte le nom indiqué.</p>
         <form id="config-form">
           <div class="home-config-field">
