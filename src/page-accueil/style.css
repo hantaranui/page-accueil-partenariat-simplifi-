@@ -47,11 +47,12 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* Police, taille et encre sont celles du texte courant du design system : on ne
-   regle que la largeur, calee sur la grille des cartes, et l'ecart avec elles. */
+/* Police, taille et graisse viennent de .t2 : on ne regle que la largeur, calee
+   sur la grille des cartes, l'ecart avec elles et l'encre des autres titres. */
 .home-intro {
   max-width: 64rem;
   margin: 0 auto 1.5rem;
+  color: var(--ft-color-text-content-strong);
 }
 
 .home-cards {

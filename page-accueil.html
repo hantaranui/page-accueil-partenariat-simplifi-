@@ -57,11 +57,12 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* Police, taille et encre sont celles du texte courant du design system : on ne
-   regle que la largeur, calee sur la grille des cartes, et l'ecart avec elles. */
+/* Police, taille et graisse viennent de .t2 : on ne regle que la largeur, calee
+   sur la grille des cartes, l'ecart avec elles et l'encre des autres titres. */
 .home-intro {
   max-width: 64rem;
   margin: 0 auto 1.5rem;
+  color: var(--ft-color-text-content-strong);
 }
 
 .home-cards {
@@ -137,7 +138,7 @@ body {
     </header>
 
     <main class="home-main">
-      <p class="home-intro" id="intro">Bienvenue sur l'outil Partenariat simplifié qui vous aidera à gérer et piloter les actions d'insertion par le sport. Que souhaitez-vous faire ?</p>
+      <h2 class="t2 home-intro" id="intro">Bienvenue sur l'outil Partenariat simplifié qui vous aidera à gérer et piloter les actions d'insertion par le sport. Que souhaitez-vous faire ?</h2>
       <nav class="home-cards" id="cards" aria-label="Accès rapides">
         <a class="ds-card-link ds-card-link-lg" id="card-dashboard" target="_top">
           <span class="ds-card-link-decoration">
