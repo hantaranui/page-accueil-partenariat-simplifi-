@@ -50,46 +50,22 @@ body {
 /* Police, taille et graisse viennent de .t2 : on ne regle que la largeur, calee
    sur la grille des cartes, l'ecart avec elles et l'encre des autres titres. */
 .home-intro {
-  max-width: 64rem;
+  max-width: 80rem;
   margin: 0 auto 1.5rem;
   text-align: center;
   color: var(--ft-color-text-content-strong);
 }
 
 /* Quatre vignettes par ligne, remplies depuis la gauche : les entrees a venir
-   prendront les places libres sans deplacer les premieres. Leur largeur est
-   plafonnee plutot que proportionnelle a l'ecran, sans quoi elles grossissent a
-   chaque pixel gagne ; la rangee de quatre reste centree sous le texte. */
+   prendront les places libres sans deplacer les premieres. Les vignettes sont le
+   composant Card link tel quel (illustration a gauche, titre a droite) : la
+   grille ne regle que leur nombre par ligne et la largeur totale. */
 .home-cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 11rem));
-  justify-content: center;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.5rem;
+  max-width: 80rem;
   margin: 0 auto;
-}
-
-/* Les vignettes restent le composant Card link du design system : fond, cadre,
-   survol, focus et etat desactive sont les siens. Le design system n'ayant pas
-   de vignette carree, on empile seulement l'illustration au-dessus du titre, dans
-   le contexte de notre grille et sans redefinir ses classes. */
-.home-cards .ds-card-link {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: .75rem;
-  aspect-ratio: 1 / 1;
-  padding: 1rem;
-  text-align: center;
-}
-
-/* Son corps s'etire en largeur dans une carte en ligne ; empile, il doit garder
-   la hauteur de son texte pour que le bloc reste centre. Deux lignes lui sont
-   reservees : un titre qui passe a la ligne ne decale plus son illustration par
-   rapport a celle de la vignette voisine. */
-.home-cards .ds-card-link-body {
-  flex: 0 0 auto;
-  min-height: 3em;
-  padding: 0;
 }
 
 /* La ligne d'etat n'existe pas chez le design system. Elle herite de l'encre du
@@ -130,8 +106,10 @@ body {
   margin-top: 1.5rem;
 }
 
-@media (max-width: 760px) {
-  .home-cards { grid-template-columns: repeat(3, minmax(0, 11rem)); }
+/* Sous cette largeur, quatre cartes en ligne n'auraient plus la place pour
+   leur titre a cote de l'illustration. */
+@media (max-width: 1000px) {
+  .home-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 600px) {
@@ -147,6 +125,6 @@ body {
     grid-row: 2;
   }
   .home-main { padding: 1.5rem 1rem; }
-  .home-cards { grid-template-columns: repeat(2, minmax(0, 11rem)); gap: 1rem; }
+  .home-cards { grid-template-columns: 1fr; gap: 1rem; }
   .home-config { padding: 1rem; }
 }

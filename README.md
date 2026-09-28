@@ -1,7 +1,7 @@
 # Widget Grist - Page d'accueil Partenariat simplifié
 
 Page d'aiguillage du projet : un bandeau aux logos France Travail et « Les clubs
-sportifs engagés », un texte d'accueil et une grille de vignettes (quatre par
+sportifs engagés », un texte d'accueil et une grille de cartes (quatre par
 ligne) qui ouvrent chacune une page du document :
 
 - **Accéder à la liste des actions** ;
@@ -109,11 +109,9 @@ Composants et classes repris tels quels :
 - le panneau de configuration utilise `form-label`, `form-control`,
   `btn btn-primary` et `btn btn-secondary`.
 
-Le design system n'a pas de vignette carrée. Card link est une carte en ligne
-(illustration, titre, description, chevron) : on garde ses classes, son fond, son
-survol, son focus et son état désactivé, mais dans notre grille son illustration
-passe au-dessus du titre, sans description ni chevron. Ce réglage de mise en
-page est écrit sous `.home-cards`, sans redéfinir aucune de ses classes.
+Les cartes gardent la disposition du composant (illustration à gauche, titre à
+droite), sans description ni chevron. Notre grille ne règle que leur nombre par
+ligne (quatre, puis deux, puis une selon la largeur) et la largeur totale.
 
 Un écart subsiste volontairement, validé avec le responsable du projet : le
 bandeau. L'en-tête agent du design system
