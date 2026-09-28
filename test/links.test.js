@@ -176,5 +176,5 @@ test("un acces refuse aux pages est signale sur les cartes", async () => {
   assert.equal(w.document.getElementById("card-soutien").getAttribute("href"), null);
   assert.ok(w.document.getElementById("card-soutien").classList.contains("ds-card-link-disabled"),
     "une carte sans cible prend l'aspect desactive du design system");
-  assert.match(w.document.getElementById("status-soutien").textContent, /accès complet/);
+  assert.match(w.document.getElementById("status-soutien").textContent, /propriétaire.*accès complet/);
 });

@@ -28,7 +28,9 @@ perd ainsi son nom chez un éditeur sans profil, et sa carte resterait grisée.
 
 Un propriétaire doit donc **enregistrer la configuration une fois** : bouton
 « Ouvrir la configuration » du panneau de droite, vérifier la page présélectionnée
-dans chaque liste, puis « Enregistrer ». Le widget stocke le numéro de chaque
+dans chaque liste, puis cliquer sur **les deux** boutons « Enregistrer » : celui
+du widget, puis celui que Grist affiche tout en haut du widget. Sans ce second
+clic, Grist ne conserve pas le choix. Le widget stocke le numéro de chaque
 page, que tout le monde voit et qui survit aux renommages, avec son nom, qui sert
 de repli si la page est supprimée puis recréée.
 
@@ -41,7 +43,8 @@ document les emporte, et rien ne transite par ce dépôt.
 2. Renseigner l'URL du widget (GitHub Pages, ou le serveur local ci-dessous).
 3. Accorder l'**accès complet** : c'est le seul niveau qui permet de lire la
    liste des pages du document. Le widget n'écrit rien dans les tables.
-4. En tant que propriétaire, ouvrir la configuration du widget et enregistrer.
+4. En tant que propriétaire, ouvrir la configuration du widget, puis cliquer sur
+   « Enregistrer » dans le widget **et** sur celui que Grist affiche en haut.
 
 URL GitHub Pages :
 

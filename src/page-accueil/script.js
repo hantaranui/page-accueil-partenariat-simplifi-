@@ -87,8 +87,11 @@ function buildLinks(options, pages, docUrl, pagesKnown = true) {
 }
 
 function statusMessage(link) {
+  // Une liste illisible vient le plus souvent des regles d'acces, qui la
+  // refusent aux editeurs meme quand le widget a l'acces complet : c'est alors
+  // la configuration enregistree par un proprietaire qui manque.
   if (link.problem === "page" && !state.pagesKnown) {
-    return "Accordez l'accès complet au widget pour qu'il trouve les pages du document.";
+    return "Cible non enregistrée : un propriétaire du document doit la choisir dans la configuration du widget, qui demande l'accès complet.";
   }
   // Des noms effaces signalent un lecteur a acces partiel : il ne peut ni
   // retrouver la page par son nom, ni enregistrer la cible lui-meme.
@@ -140,7 +143,7 @@ function openConfig() {
   // Un editeur a acces partiel ne recoit pas la liste des pages : les listes
   // resteraient vides sans qu'il sache pourquoi.
   document.getElementById("config-help").textContent = state.pages.length
-    ? "Choisissez la page du document qu'ouvre chaque carte, puis enregistrez. Les éditeurs n'ont leurs liens qu'une fois ce choix enregistré."
+    ? "Choisissez la page du document qu'ouvre chaque carte, puis cliquez sur « Enregistrer » ci-dessous et sur le bouton « Enregistrer » que Grist affiche en haut du widget. Sans ce second clic, le choix n'est pas conservé et les éditeurs n'ont pas leurs liens."
     : "Vos droits ne permettent pas de lire la liste des pages du document : ouvrez cette configuration en tant que propriétaire.";
 
   // Le texte d'accueil part avec les cartes : sa question n'a pas de sens
