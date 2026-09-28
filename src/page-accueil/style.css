@@ -68,6 +68,13 @@ body {
   margin: 0 auto;
 }
 
+/* Le composant ne laisse que .75rem entre sa decoration et son texte, ecart
+   prevu pour une petite icone : a cote d'une illustration de 64 px, le titre
+   paraissait colle. */
+.home-cards .ds-card-link-body {
+  padding-left: 1.25rem;
+}
+
 /* La ligne d'etat n'existe pas chez le design system. Elle herite de l'encre du
    corps de carte, qu'il passe au gris quand la carte est desactivee. */
 .home-card-status {

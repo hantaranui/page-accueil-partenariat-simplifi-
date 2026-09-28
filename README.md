@@ -112,8 +112,10 @@ Composants et classes repris tels quels :
 - le panneau de configuration utilise `form-label`, `form-control`,
   `btn btn-primary` et `btn btn-secondary`.
 
-Les cartes gardent la disposition du composant (illustration à gauche, titre à
-droite), sans description ni chevron. Notre grille ne règle que leur nombre par
+Les cartes gardent la disposition du composant (illustration à gauche, titre,
+chevron à droite), sans description. Seul écart : l'espace entre l'illustration
+et le titre passe de .75rem à 1.25rem, l'écart du composant étant prévu pour une
+petite icône. Notre grille ne règle que leur nombre par
 ligne (quatre, puis deux, puis une selon la largeur) et la largeur totale.
 
 Un écart subsiste volontairement, validé avec le responsable du projet : le
