@@ -61,7 +61,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
-  max-width: 48rem;
+  max-width: 64rem;
   margin: 0 auto;
 }
 
@@ -77,7 +77,7 @@ body {
 /* Panneau de configuration : il remplace les cartes le temps du reglage, sur le
    meme fond blanc qu'elles. */
 .home-config {
-  max-width: 48rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 1.5rem;
   background: var(--ft-color-background-neutral-light);
@@ -131,11 +131,9 @@ body {
 
     <main class="home-main">
       <nav class="home-cards" id="cards" aria-label="Accès rapides">
-        <a class="ds-card-link ds-card-link-default" id="card-dashboard" target="_top">
+        <a class="ds-card-link ds-card-link-lg" id="card-dashboard" target="_top">
           <span class="ds-card-link-decoration">
-            <span class="ds-card-link-decoration-container">
-              <span aria-hidden="true" class="icon icon-dashboard"></span>
-            </span>
+            <img src="https://cdn.francetravail.fr/studio/design-system/illustrations/spots/dashboard.svg" width="64" height="64" alt="">
           </span>
           <span class="ds-card-link-body">
             <span class="ds-card-link-title">Tableau de bord des actions</span>
@@ -144,11 +142,9 @@ body {
           </span>
           <span aria-hidden="true" class="icon icon-chevron-r"></span>
         </a>
-        <a class="ds-card-link ds-card-link-default" id="card-soutien" target="_top">
+        <a class="ds-card-link ds-card-link-lg" id="card-soutien" target="_top">
           <span class="ds-card-link-decoration">
-            <span class="ds-card-link-decoration-container">
-              <span aria-hidden="true" class="icon icon-handshake"></span>
-            </span>
+            <img src="https://cdn.francetravail.fr/studio/design-system/illustrations/spots/handshake.svg" width="64" height="64" alt="">
           </span>
           <span class="ds-card-link-body">
             <span class="ds-card-link-title">Page publique de soutien</span>

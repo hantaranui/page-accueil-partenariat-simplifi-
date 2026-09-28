@@ -90,9 +90,13 @@ La page charge la feuille et l'autoloader du design system, dans l'univers
 « Outils agent » (classe `outil-agent` sur `<body>`), comme le tableau de bord.
 Composants et classes repris tels quels :
 
-- les cartes sont le composant **Card link** (`ds-card-link ds-card-link-default`),
-  avec ses icônes (`icon-dashboard`, `icon-handshake`, `icon-chevron-r`) et son
-  état désactivé (`ds-card-link-disabled`) quand la page visée est introuvable ;
+- les cartes sont le composant **Card link** en variante large
+  (`ds-card-link ds-card-link-lg`), avec les illustrations « spot » du design
+  system (`dashboard.svg`, `handshake.svg`), son chevron (`icon-chevron-r`) et
+  son état désactivé (`ds-card-link-disabled`) quand la page visée est
+  introuvable. En univers agent, son titre a la taille du texte courant (14 px)
+  et ne s'en distingue que par la police et la graisse : c'est voulu par le
+  design system, on ne le grossit pas ;
 - les titres prennent `.t1` et `.t2`, qui fixent police, taille et graisse ;
 - le panneau de configuration utilise `form-label`, `form-control`,
   `btn btn-primary` et `btn btn-secondary`.

@@ -51,7 +51,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
-  max-width: 48rem;
+  max-width: 64rem;
   margin: 0 auto;
 }
 
@@ -67,7 +67,7 @@ body {
 /* Panneau de configuration : il remplace les cartes le temps du reglage, sur le
    meme fond blanc qu'elles. */
 .home-config {
-  max-width: 48rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 1.5rem;
   background: var(--ft-color-background-neutral-light);
