@@ -1,10 +1,11 @@
 # Widget Grist - Page d'accueil Partenariat simplifié
 
 Page d'aiguillage du projet : un bandeau aux logos France Travail et « Les clubs
-sportifs engagés », et deux cartes qui ouvrent chacune une page du document :
+sportifs engagés », un texte d'accueil et une grille de vignettes (quatre par
+ligne) qui ouvrent chacune une page du document :
 
-- **Tableau de bord des actions** ;
-- **Page publique de soutien**.
+- **Accéder à la liste des actions** ;
+- **Accéder à la page publique de soutien**.
 
 ## Navigation et configuration
 
@@ -90,18 +91,25 @@ La page charge la feuille et l'autoloader du design system, dans l'univers
 « Outils agent » (classe `outil-agent` sur `<body>`), comme le tableau de bord.
 Composants et classes repris tels quels :
 
-- les cartes sont le composant **Card link** en variante large
+- les vignettes sont le composant **Card link** en variante large
   (`ds-card-link ds-card-link-lg`), avec les illustrations « spot » du design
-  system (`dashboard.svg`, `handshake.svg`), son chevron (`icon-chevron-r`) et
-  son état désactivé (`ds-card-link-disabled`) quand la page visée est
-  introuvable. En univers agent, son titre a la taille du texte courant (14 px)
-  et ne s'en distingue que par la police et la graisse : c'est voulu par le
-  design system, on ne le grossit pas ;
+  system (`dashboard.svg`, `handshake.svg`) et son état désactivé
+  (`ds-card-link-disabled`) quand la page visée est introuvable. En univers
+  agent, son titre a la taille du texte courant (14 px) et ne s'en distingue que
+  par la police et la graisse : c'est voulu par le design system, on ne le
+  grossit pas ;
 - les titres prennent `.t1` et `.t2`, qui fixent police, taille et graisse ;
 - le panneau de configuration utilise `form-label`, `form-control`,
   `btn btn-primary` et `btn btn-secondary`.
 
-Un écart subsiste volontairement : le bandeau. L'en-tête agent du design system
+Le design system n'a pas de vignette carrée. Card link est une carte en ligne
+(illustration, titre, description, chevron) : on garde ses classes, son fond, son
+survol, son focus et son état désactivé, mais dans notre grille son illustration
+passe au-dessus du titre, sans description ni chevron. Ce réglage de mise en
+page est écrit sous `.home-cards`, sans redéfinir aucune de ses classes.
+
+Un écart subsiste volontairement, validé avec le responsable du projet : le
+bandeau. L'en-tête agent du design system
 (`ft-header-agent`) n'affiche qu'un logo d'application et son nom, alignés à
 gauche ; il ne permet ni le logo France Travail, ni le titre centré entre les
 deux logos que demande la maquette.

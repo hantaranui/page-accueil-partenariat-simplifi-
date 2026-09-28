@@ -52,20 +52,46 @@ body {
 .home-intro {
   max-width: 64rem;
   margin: 0 auto 1.5rem;
+  text-align: center;
   color: var(--ft-color-text-content-strong);
 }
 
+/* Quatre vignettes par ligne, remplies depuis la gauche : les entrees a venir
+   prendront les places libres sans deplacer les premieres. */
 .home-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.5rem;
   max-width: 64rem;
   margin: 0 auto;
 }
 
-/* Les cartes sont le composant Card link du design system : on ne regle ici que
-   la ligne d'etat, qui n'existe pas chez lui. Elle herite de l'encre du corps de
-   carte, que le design system passe au gris quand la carte est desactivee. */
+/* Les vignettes restent le composant Card link du design system : fond, cadre,
+   survol, focus et etat desactive sont les siens. Le design system n'ayant pas
+   de vignette carree, on empile seulement l'illustration au-dessus du titre, dans
+   le contexte de notre grille et sans redefinir ses classes. */
+.home-cards .ds-card-link {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  aspect-ratio: 1 / 1;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Son corps s'etire en largeur dans une carte en ligne ; empile, il doit garder
+   la hauteur de son texte pour que le bloc reste centre. Deux lignes lui sont
+   reservees : un titre qui passe a la ligne ne decale plus son illustration par
+   rapport a celle de la vignette voisine. */
+.home-cards .ds-card-link-body {
+  flex: 0 0 auto;
+  min-height: 3em;
+  padding: 0;
+}
+
+/* La ligne d'etat n'existe pas chez le design system. Elle herite de l'encre du
+   corps de carte, qu'il passe au gris quand la carte est desactivee. */
 .home-card-status {
   margin-top: .5rem;
   font-size: .875rem;
@@ -102,6 +128,10 @@ body {
   margin-top: 1.5rem;
 }
 
+@media (max-width: 900px) {
+  .home-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 @media (max-width: 600px) {
   .home-banner {
     grid-template-columns: 1fr 1fr;
@@ -115,6 +145,6 @@ body {
     grid-row: 2;
   }
   .home-main { padding: 1.5rem 1rem; }
-  .home-cards { grid-template-columns: 1fr; gap: 1rem; }
+  .home-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   .home-config { padding: 1rem; }
 }
