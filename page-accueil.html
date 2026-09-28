@@ -57,6 +57,13 @@ body {
   padding: 2rem 1.5rem;
 }
 
+/* Police, taille et encre sont celles du texte courant du design system : on ne
+   regle que la largeur, calee sur la grille des cartes, et l'ecart avec elles. */
+.home-intro {
+  max-width: 64rem;
+  margin: 0 auto 1.5rem;
+}
+
 .home-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,6 +137,7 @@ body {
     </header>
 
     <main class="home-main">
+      <p class="home-intro" id="intro">Bienvenue sur l'outil Partenariat simplifié qui vous aidera à gérer et piloter les actions d'insertion par le sport. Que souhaitez-vous faire ?</p>
       <nav class="home-cards" id="cards" aria-label="Accès rapides">
         <a class="ds-card-link ds-card-link-lg" id="card-dashboard" target="_top">
           <span class="ds-card-link-decoration">
@@ -286,6 +294,9 @@ function openConfig() {
     const {page} = resolveTarget(option, state.pages, defaultName);
     select.value = option && page ? String(page.id) : "";
   }
+  // Le texte d'accueil part avec les cartes : sa question n'a pas de sens
+  // au-dessus du formulaire.
+  document.getElementById("intro").hidden = true;
   document.getElementById("cards").hidden = true;
   document.getElementById("config").hidden = false;
   document.getElementById("config-dashboard").focus();
@@ -293,6 +304,7 @@ function openConfig() {
 
 function closeConfig() {
   document.getElementById("config").hidden = true;
+  document.getElementById("intro").hidden = false;
   document.getElementById("cards").hidden = false;
 }
 

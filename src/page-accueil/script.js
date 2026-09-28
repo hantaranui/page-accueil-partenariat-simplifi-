@@ -108,6 +108,9 @@ function openConfig() {
     const {page} = resolveTarget(option, state.pages, defaultName);
     select.value = option && page ? String(page.id) : "";
   }
+  // Le texte d'accueil part avec les cartes : sa question n'a pas de sens
+  // au-dessus du formulaire.
+  document.getElementById("intro").hidden = true;
   document.getElementById("cards").hidden = true;
   document.getElementById("config").hidden = false;
   document.getElementById("config-dashboard").focus();
@@ -115,6 +118,7 @@ function openConfig() {
 
 function closeConfig() {
   document.getElementById("config").hidden = true;
+  document.getElementById("intro").hidden = false;
   document.getElementById("cards").hidden = false;
 }
 
