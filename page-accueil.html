@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partenariat simplifié</title>
+    <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+    <link href="https://cdn.francetravail.fr/studio/design-system/css/styles.css" rel="stylesheet">
+    <script src="https://cdn.francetravail.fr/webco/v1/ft-autoloader.js" fetchpriority="high"></script>
+    <style>
+/* Toutes nos classes portent le prefixe « home- » : le design system est charge
+   avant cette feuille, et reprendre un de ses noms (header, card, title...) nous
+   ferait heriter de ses regles sans le voir. */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ft-color-background-layout-body);
+  color: var(--ft-color-text-content-default);
+}
+
+.home-banner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--ft-color-background-neutral-light);
+  border-bottom: 1px solid var(--ft-color-border-neutral-default);
+}
+
+.home-logo {
+  display: block;
+  height: 56px;
+  width: auto;
+  max-width: 100%;
+}
+
+/* Le logo des clubs se cale sur le bord droit pour que le titre reste centre
+   sur la page, quelle que soit la largeur respective des deux logos. Presque
+   carre, il parait minuscule a hauteur egale du logo horizontal : on le grandit
+   pour que les deux marques pesent autant a l'oeil. */
+.home-logo-clubs {
+  justify-self: end;
+  height: 72px;
+}
+
+.home-title {
+  margin: 0;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ft-color-text-content-strong);
+}
+
+.home-main {
+  padding: 2rem 1.5rem;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+/* « a. » et non « . » seul : la regle de lien du design system,
+   a:not(.btn,.dropdown-item,.nav-link), pese une classe et un element. */
+a.home-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 9rem;
+  padding: 1.5rem;
+  background: var(--ft-color-background-neutral-light);
+  border: 1px solid var(--ft-color-border-neutral-default);
+  border-radius: .5rem;
+  color: var(--ft-color-text-primary-default);
+  text-decoration: none;
+}
+
+/* Le survol ne change ni le fond ni l'encre : il epaissit le cadre et souligne
+   le titre, ce qui garde le contraste du texte sur blanc. */
+a.home-card[href]:hover {
+  border-color: var(--ft-color-border-primary-default);
+  box-shadow: 0 0 0 1px var(--ft-color-border-primary-default);
+  color: var(--ft-color-text-primary-default);
+}
+a.home-card[href]:hover .home-card-title { text-decoration: underline; }
+
+a.home-card:focus-visible {
+  outline: 3px solid var(--ft-color-border-primary-default);
+  outline-offset: 3px;
+}
+
+.home-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Carte sans cible : rien n'y ressemble a un lien actif. */
+a.home-card:not([href]) {
+  color: var(--ft-color-text-content-weak);
+  cursor: default;
+}
+
+.home-card-status {
+  font-size: .875rem;
+  color: var(--ft-color-text-content-weak);
+}
+.home-card-status:empty { display: none; }
+
+@media (max-width: 600px) {
+  .home-banner {
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+  }
+  .home-logo { height: 40px; }
+  .home-logo-clubs { height: 52px; }
+  /* Les deux logos occupent la premiere ligne, le titre passe dessous. */
+  .home-title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 1.5rem;
+  }
+  .home-main { padding: 1.5rem 1rem; }
+  .home-cards { grid-template-columns: 1fr; gap: 1rem; }
+  a.home-card { min-height: 6rem; }
+}
+</style>
+  </head>
+  <body class="outil-agent">
+    <header class="home-banner">
+      <img class="home-logo" src="https://cdn.francetravail.fr/studio/logos/marque/Logo_France_Travail_RVB_Horizontal_Coul_Positif.svg" alt="France Travail">
+      <h1 class="home-title">Partenariat simplifié</h1>
+      <img class="home-logo home-logo-clubs" src="https://lesclubs-sportifs-engages.francetravail.fr/img/logo-lcse.svg" alt="Les clubs sportifs engagés">
+    </header>
+
+    <main class="home-main">
+      <nav class="home-cards" aria-label="Accès rapides">
+        <a class="home-card" id="card-dashboard" target="_top">
+          <span class="home-card-title">Tableau de bord des actions</span>
+          <span class="home-card-status" id="status-dashboard"></span>
+        </a>
+        <a class="home-card" id="card-soutien" target="_top">
+          <span class="home-card-title">Page publique de soutien</span>
+          <span class="home-card-status" id="status-soutien"></span>
+        </a>
+      </nav>
+    </main>
+
+    <script>
+"use strict";
+
+// Page d'aiguillage : le widget ne lit aucune donnee, il signale seulement a
+// Grist qu'il est pret pour que l'iframe s'affiche.
+grist.ready();
+</script>
+  </body>
+</html>
