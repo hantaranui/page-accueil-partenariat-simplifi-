@@ -20,14 +20,20 @@ Aucune adresse n'est écrite dans le code. Le widget la construit à l'exécutio
 3. la page visée par chaque carte vient des options du widget.
 
 Tant que personne n'a rien configuré, les cartes visent les pages nommées
-`Dashboard` et `Page publique`. Une copie fraîche du document fonctionne donc
-sans réglage. Pour changer de cible, ouvrir la configuration du widget (bouton
-« Ouvrir la configuration » du panneau de droite) et choisir une page dans chaque
-liste. Le widget enregistre le numéro de la page, qui survit aux renommages, et
-son nom, qui sert de repli si la page est supprimée puis recréée.
+`Dashboard` et `Page publique`, mais **pour les propriétaires seulement**. Pour
+un utilisateur à accès partiel (un éditeur que les règles d'accès privent d'une
+table), Grist efface le nom de toute page qui porte un widget sur cette table,
+et ne laisse que son numéro. Le tableau de bord, posé sur la table des actions,
+perd ainsi son nom chez un éditeur sans profil, et sa carte resterait grisée.
 
-Les options sont stockées dans le document, avec le widget : rien ne transite
-par ce dépôt.
+Un propriétaire doit donc **enregistrer la configuration une fois** : bouton
+« Ouvrir la configuration » du panneau de droite, vérifier la page présélectionnée
+dans chaque liste, puis « Enregistrer ». Le widget stocke le numéro de chaque
+page, que tout le monde voit et qui survit aux renommages, avec son nom, qui sert
+de repli si la page est supprimée puis recréée.
+
+Les options sont stockées dans le document, avec le widget : une copie du
+document les emporte, et rien ne transite par ce dépôt.
 
 ## Installation dans Grist
 
@@ -35,6 +41,7 @@ par ce dépôt.
 2. Renseigner l'URL du widget (GitHub Pages, ou le serveur local ci-dessous).
 3. Accorder l'**accès complet** : c'est le seul niveau qui permet de lire la
    liste des pages du document. Le widget n'écrit rien dans les tables.
+4. En tant que propriétaire, ouvrir la configuration du widget et enregistrer.
 
 URL GitHub Pages :
 

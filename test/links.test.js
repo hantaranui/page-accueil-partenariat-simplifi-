@@ -104,6 +104,28 @@ test("une cible introuvable laisse la carte sans adresse et dit laquelle manque"
   assert.deepEqual([vide.dashboard.problem, vide.dashboard.pageName], ["page", "Dashboard"]);
 });
 
+test("chez un editeur a acces partiel, le numero enregistre suffit", () => {
+  // Grist efface le nom d'une page qui porte un widget sur une table interdite
+  // au lecteur, mais garde son numero : c'est le cas du tableau de bord, pose sur
+  // la table des actions, pour un editeur sans profil.
+  const censurees = [{id: 35, name: ""}, {id: 38, name: "Page publique"}];
+  const configure = {dashboard: {pageId: 35, pageName: "Dashboard"}, soutien: {pageId: 38, pageName: "Page publique"}};
+  const {dashboard, soutien} = links(configure, censurees);
+  assert.equal(dashboard.url, `${DOC}/p/35`);
+  assert.equal(dashboard.pageName, "Dashboard", "le nom enregistre remplace le nom efface");
+  assert.equal(soutien.url, `${DOC}/p/38`);
+
+  // Sans configuration, le nom par defaut ne peut pas retrouver une page effacee.
+  assert.equal(links(null, censurees).dashboard.problem, "page");
+  assert.equal(links(null, censurees).soutien.url, `${DOC}/p/38`);
+});
+
+test("liste des pages illisible : on se fie au numero enregistre", () => {
+  const trouve = plain(widget.buildLinks({dashboard: {pageId: 35}}, [], DOC, false));
+  assert.equal(trouve[0].url, `${DOC}/p/35`);
+  assert.equal(trouve[1].problem, "page", "sans numero enregistre, rien a quoi se fier");
+});
+
 test("sans adresse de document, aucune carte ne recoit de lien", () => {
   const {dashboard, soutien} = links(null, PAGES, null);
   assert.deepEqual([dashboard.url, dashboard.problem], [null, "document"]);
@@ -123,6 +145,29 @@ test("les cartes recoivent leur lien une fois le document lu", async () => {
   assert.equal(carte.getAttribute("href"), "https://h.org/doc/Abc123/p/35");
   assert.equal(carte.classList.contains("ds-card-link-disabled"), false);
   assert.equal(w.document.getElementById("status-dashboard").textContent, "");
+});
+
+test("un editeur a ses liens des qu'un proprietaire a enregistre la configuration", async () => {
+  const pagesVuesParUnEditeur = async (table) => table === "_grist_Pages"
+    ? {id: [1, 2], viewRef: [35, 38], pagePos: [1, 2]}
+    : {id: [35, 38], name: ["", "Page publique"]};
+  const jeton = async () => ({baseUrl: "https://h.org/api/docs/Abc123", token: "t"});
+
+  const configure = loadWidget({
+    onOptions: (rappel) => rappel({dashboard: {pageId: 35, pageName: "Dashboard"}}),
+    docApi: {fetchTable: pagesVuesParUnEditeur, getAccessToken: jeton},
+  });
+  await configure.load();
+  assert.equal(configure.document.getElementById("card-dashboard").getAttribute("href"),
+    "https://h.org/doc/Abc123/p/35");
+
+  const nonConfigure = loadWidget({docApi: {fetchTable: pagesVuesParUnEditeur, getAccessToken: jeton}});
+  await nonConfigure.load();
+  assert.equal(nonConfigure.document.getElementById("card-dashboard").getAttribute("href"), null);
+  assert.match(nonConfigure.document.getElementById("status-dashboard").textContent, /propriétaire/,
+    "l'editeur apprend qui peut debloquer la carte");
+  assert.equal(nonConfigure.document.getElementById("status-soutien").textContent, "",
+    "une carte qui fonctionne n'affiche aucun message");
 });
 
 test("un acces refuse aux pages est signale sur les cartes", async () => {

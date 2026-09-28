@@ -7,8 +7,10 @@
 // etant public, aucun des deux ne doit y figurer.
 
 // Le nom par defaut est celui de la page dans le document livre. Il ne sert que
-// tant que personne n'a choisi de cible, ce qui evite de reconfigurer le widget a
-// chaque copie fraiche du document.
+// tant que personne n'a choisi de cible, et seulement pour qui voit les noms des
+// pages : un proprietaire, pas un editeur a acces partiel (voir resolveTarget).
+// Sur une copie fraiche, un proprietaire doit donc enregistrer la configuration
+// une fois pour que les editeurs aient leurs liens.
 const TARGETS = [
   {key: "dashboard", defaultName: "Dashboard"},
   {key: "soutien", defaultName: "Page publique"},
@@ -16,7 +18,7 @@ const TARGETS = [
 
 const state = {
   loaded: false,
-  accessDenied: false,
+  pagesKnown: true,
   pages: [],
   docUrl: null,
   options: null,
@@ -50,19 +52,33 @@ function listPages(pagesTable, viewsTable) {
 
 // Le numero de vue survit aux renommages comme aux copies du document ; le nom
 // ne sert que de repli, quand la page choisie a ete supprimee puis recreee.
-function resolveTarget(option, pages, defaultName) {
+//
+// Le numero est aussi la seule donnee sure chez qui n'a qu'un acces partiel :
+// Grist efface le nom de toute page portant un widget sur une table que
+// l'utilisateur ne peut pas lire, mais garde son numero. Un editeur sans droit
+// sur la table des actions voit donc la page du tableau de bord sans nom. Et si
+// la liste des pages est illisible, on se fie au numero enregistre plutot que de
+// desactiver la carte.
+function resolveTarget(option, pages, defaultName, pagesKnown = true) {
   const choice = option && typeof option === "object" ? option : {};
-  const byId = pages.find((page) => page.id === Number(choice.pageId));
-  if (byId) return {page: byId, wanted: byId.name};
-  const wanted = typeof choice.pageName === "string" && choice.pageName.trim()
-    ? choice.pageName.trim() : defaultName;
-  const byName = pages.find((page) => page.name.trim() === wanted);
+  const savedName = typeof choice.pageName === "string" ? choice.pageName.trim() : "";
+  const id = Number(choice.pageId);
+  if (Number.isInteger(id) && id > 0) {
+    const byId = pages.find((page) => page.id === id);
+    if (byId) {
+      const name = byId.name || savedName;
+      return {page: {id, name}, wanted: name || defaultName};
+    }
+    if (!pagesKnown) return {page: {id, name: savedName}, wanted: savedName || defaultName};
+  }
+  const wanted = savedName || defaultName;
+  const byName = pages.find((page) => page.name && page.name.trim() === wanted);
   return {page: byName || null, wanted};
 }
 
-function buildLinks(options, pages, docUrl) {
+function buildLinks(options, pages, docUrl, pagesKnown = true) {
   return TARGETS.map(({key, defaultName}) => {
-    const {page, wanted} = resolveTarget(options && options[key], pages, defaultName);
+    const {page, wanted} = resolveTarget(options && options[key], pages, defaultName, pagesKnown);
     let problem = null;
     if (!page) problem = "page";
     else if (!docUrl) problem = "document";
@@ -71,7 +87,14 @@ function buildLinks(options, pages, docUrl) {
 }
 
 function statusMessage(link) {
-  if (state.accessDenied) return "Accordez l'accès complet au widget pour qu'il trouve les pages du document.";
+  if (link.problem === "page" && !state.pagesKnown) {
+    return "Accordez l'accès complet au widget pour qu'il trouve les pages du document.";
+  }
+  // Des noms effaces signalent un lecteur a acces partiel : il ne peut ni
+  // retrouver la page par son nom, ni enregistrer la cible lui-meme.
+  if (link.problem === "page" && state.pages.some((page) => !page.name)) {
+    return "Cible non enregistrée : un propriétaire du document doit la choisir dans la configuration du widget.";
+  }
   if (link.problem === "page") return `Page « ${link.pageName} » introuvable dans ce document.`;
   if (link.problem === "document") return "Adresse du document indisponible.";
   return "";
@@ -80,7 +103,7 @@ function statusMessage(link) {
 function render() {
   // Avant la premiere lecture du document, une carte sans cible n'est pas encore
   // une erreur : on n'affiche rien plutot qu'un « introuvable » fugace.
-  const links = state.loaded ? buildLinks(state.options, state.pages, state.docUrl) : [];
+  const links = state.loaded ? buildLinks(state.options, state.pages, state.docUrl, state.pagesKnown) : [];
   for (const {key} of TARGETS) {
     const link = links.find((item) => item.key === key);
     const card = document.getElementById(`card-${key}`);
@@ -99,14 +122,20 @@ function openConfig() {
   for (const {key, defaultName} of TARGETS) {
     const select = document.getElementById(`config-${key}`);
     select.innerHTML = "";
-    // La valeur vide ne fige aucune page : la carte continue de viser la page
-    // de son nom par defaut, ce qui suit le document d'une copie a l'autre.
-    select.appendChild(makeOption("", `Par défaut : page « ${defaultName} »`));
-    for (const page of state.pages) select.appendChild(makeOption(String(page.id), page.name));
-
-    const option = state.options && state.options[key];
-    const {page} = resolveTarget(option, state.pages, defaultName);
-    select.value = option && page ? String(page.id) : "";
+    // Chaque liste presente la page que la carte vise deja, trouvee par son
+    // numero ou par son nom par defaut : enregistrer fige alors son numero, seul
+    // repere que voient les editeurs a acces partiel. Une liste sans page
+    // retrouvee demande un choix explicite plutot que d'enregistrer du vide.
+    const {page} = resolveTarget(state.options && state.options[key], state.pages, defaultName);
+    if (!page) {
+      const invite = makeOption("", "Choisir une page");
+      invite.disabled = true;
+      select.appendChild(invite);
+    }
+    for (const item of state.pages) {
+      select.appendChild(makeOption(String(item.id), item.name || `Page n° ${item.id}`));
+    }
+    select.value = page ? String(page.id) : "";
   }
   // Le texte d'accueil part avec les cartes : sa question n'a pas de sens
   // au-dessus du formulaire.
@@ -156,7 +185,7 @@ async function load() {
     state.pages = listPages(pagesTable, viewsTable);
   } catch (error) {
     console.warn("Pages du document illisibles :", error);
-    state.accessDenied = true;
+    state.pagesKnown = false;
   }
   try {
     const {baseUrl} = await grist.docApi.getAccessToken({readOnly: true});
