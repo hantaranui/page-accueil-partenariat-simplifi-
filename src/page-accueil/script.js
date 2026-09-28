@@ -137,6 +137,12 @@ function openConfig() {
     }
     select.value = page ? String(page.id) : "";
   }
+  // Un editeur a acces partiel ne recoit pas la liste des pages : les listes
+  // resteraient vides sans qu'il sache pourquoi.
+  document.getElementById("config-help").textContent = state.pages.length
+    ? "Choisissez la page du document qu'ouvre chaque carte, puis enregistrez. Les éditeurs n'ont leurs liens qu'une fois ce choix enregistré."
+    : "Vos droits ne permettent pas de lire la liste des pages du document : ouvrez cette configuration en tant que propriétaire.";
+
   // Le texte d'accueil part avec les cartes : sa question n'a pas de sens
   // au-dessus du formulaire.
   document.getElementById("intro").hidden = true;
