@@ -25,16 +25,28 @@ Fichiers modifiés : aucun
 Build refait : pas nécessaire
 Commit : aucun (inventaire seulement)
 
-
 ## Tâche 2 — Brouillon du carnet de tests de la page d'accueil
 
 Date : 16/10/2026
 Agent : @recetteur
 Prompt : rédiger le brouillon du carnet (mission 1) dans docs/tests/carnet-accueil.md, fonctions déduites du README et du code, tests uniquement sur DEV
-Note /5 :
+Note /5 : 3
 Ce qui allait : un seul fichier créé ; 45 tests (ACC-001 à ACC-045) sur 8 fonctions identifiées ; profils et piège des noms de pages couverts ; 14 [À CONFIRMER] listés ; aucun test présenté comme réussi.
 Ce que j'ai fait corriger : rien pour l'instant. À revoir : ACC-001 à ACC-003 tirés du code, difficiles à jouer depuis l'écran.
 Tests : aucun lancé (agent sans commande), 45 proposés
 Fichiers modifiés : docs/tests/carnet-accueil.md (créé)
 Build refait : pas nécessaire (src/ non modifié)
 Commit : docs: brouillon du carnet de tests de la page d'accueil
+
+## Tâche 3 — Carnet de tests réorganisé en trois parties
+
+Date : 16/10/2026
+Agent : @recetteur
+Prompt : réorganiser docs/tests/carnet-accueil.md en préparation / tests du testeur / tests de la développeuse, sans renuméroter, en français simple
+Note /5 :
+Ce qui allait : 45 tests gardés avec leur numéro (24 pour le testeur, 21 pour la développeuse) ; 13 actions de préparation reliées aux tests ; situations A, B, C ; introduction pour le testeur ; écarts signalés (ACC-030, ACC-044).
+Ce que j'ai fait corriger : rien pour l'instant. À trancher : 18 tests du testeur supposent un compte propriétaire (À CONFIRMER 15), remise à zéro de la configuration (16), nom de la page dans le menu (17).
+Tests : aucun lancé (agent sans commande), 45 proposés
+Fichiers modifiés : docs/tests/carnet-accueil.md
+Build refait : pas nécessaire (src/ non modifié)
+Commit : docs: carnet de tests réorganisé pour le testeur
