@@ -5,60 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Partenariat simplifié</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+    <script src="https://hantaranui.github.io/Bandeau_France-Travail/bandeau.js" data-titre="Partenariat simplifié"></script>
     <link href="https://cdn.francetravail.fr/studio/design-system/css/styles.css" rel="stylesheet">
     <script src="https://cdn.francetravail.fr/webco/v1/ft-autoloader.js" fetchpriority="high"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="outil-agent">
-    <header class="home-banner">
-      <img class="home-logo" src="https://cdn.francetravail.fr/studio/logos/marque/Logo_France_Travail_RVB_Horizontal_Coul_Positif.svg" alt="France Travail">
-      <h1 class="t1 home-title">Partenariat simplifié</h1>
-      <img class="home-logo home-logo-clubs" src="https://lesclubs-sportifs-engages.francetravail.fr/img/logo-lcse.svg" alt="Les clubs sportifs engagés">
-    </header>
-
     <main class="home-main">
-      <h2 class="t2 home-intro" id="intro">Bienvenue sur l'outil Partenariat simplifié qui vous aidera à gérer et piloter les actions d'insertion par le sport.<br>Que souhaitez-vous faire ?</h2>
-      <nav class="home-cards" id="cards" aria-label="Accès rapides">
-        <a class="ds-card-link ds-card-link-lg" id="card-dashboard" target="_top">
-          <span class="ds-card-link-decoration">
-            <img src="https://cdn.francetravail.fr/studio/design-system/illustrations/spots/dashboard.svg" width="64" height="64" alt="">
-          </span>
-          <span class="ds-card-link-body">
-            <span class="ds-card-link-title">Accéder à la liste des actions</span>
-            <span class="home-card-status" id="status-dashboard"></span>
-          </span>
-          <span aria-hidden="true" class="icon icon-chevron-r"></span>
-        </a>
-        <a class="ds-card-link ds-card-link-lg" id="card-soutien" target="_top">
-          <span class="ds-card-link-decoration">
-            <img src="https://cdn.francetravail.fr/studio/design-system/illustrations/spots/handshake.svg" width="64" height="64" alt="">
-          </span>
-          <span class="ds-card-link-body">
-            <span class="ds-card-link-title">Accéder à la page publique de soutien</span>
-            <span class="home-card-status" id="status-soutien"></span>
-          </span>
-          <span aria-hidden="true" class="icon icon-chevron-r"></span>
-        </a>
-      </nav>
-
-      <section class="home-config" id="config" hidden aria-labelledby="config-title">
-        <h2 class="t2 home-config-title" id="config-title">Cible des cartes</h2>
-        <p class="home-config-help" id="config-help">Choisissez la page du document qu'ouvre chaque carte, puis cliquez sur « Enregistrer » ci-dessous et sur le bouton « Enregistrer » que Grist affiche en haut du widget. Sans ce second clic, le choix n'est pas conservé et les éditeurs n'ont pas leurs liens.</p>
-        <form id="config-form">
-          <div class="home-config-field">
-            <label class="form-label" for="config-dashboard">Accéder à la liste des actions</label>
-            <select class="form-control" id="config-dashboard"></select>
+      <!-- Zone d'accueil. Pour enlever la bande teintée ET son bas en courbe,
+           il suffit de retirer la classe « with-bg-blue » ci-dessous : la page
+           redevient blanche. (« strip » seule ne change rien de visible.) -->
+      <div class="strip with-bg-blue home-hero">
+        <div class="home-content">
+          <div class="home-text">
+            <!-- Le seul h1 de la page : le bandeau commun n'en a pas. Le <br role="none">
+                 coupe la ligne sans que le lecteur d'écran lise une rupture. -->
+            <h1 class="display-3 home-title">
+              <span class="font-weight-normal">Bienvenue sur</span><br role="none">
+              <span class="font-weight-bold">Partenariat simplifié</span>
+            </h1>
+            <p class="t2 font-weight-normal home-intro">L'outil qui vous aidera à gérer et piloter les actions d'insertion par le sport.</p>
           </div>
-          <div class="home-config-field">
-            <label class="form-label" for="config-soutien">Accéder à la page publique de soutien</label>
-            <select class="form-control" id="config-soutien"></select>
+          <!-- Le cadre porte les deux disques décoratifs (voir style.css). -->
+          <div class="home-photo-frame">
+            <img class="home-photo" src="photo-accueil.jpg" alt="" width="1200" height="800">
           </div>
-          <div class="home-config-actions">
-            <button class="btn btn-primary" type="submit"><span class="btn-content">Enregistrer</span></button>
-            <button class="btn btn-secondary" type="button" id="config-cancel"><span class="btn-content">Annuler</span></button>
-          </div>
-        </form>
-      </section>
+        </div>
+      </div>
     </main>
 
     <script src="script.js"></script>

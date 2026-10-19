@@ -2,136 +2,131 @@
    avant cette feuille, et reprendre un de ses noms (header, card, title...) nous
    ferait heriter de ses regles sans le voir. */
 
+/* Fond et couleur du texte vont ensemble : si seul le fond etait pose, un texte
+   clair herite d'un theme sombre de Grist deviendrait illisible sur le blanc.
+   Sous « outil-agent », --ft-color-background-layout-body est bleu pale : le
+   blanc vient de --ft-color-background-neutral-light. */
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--ft-color-background-layout-body);
+  background: var(--ft-color-background-neutral-light);
   color: var(--ft-color-text-content-default);
 }
 
-.home-banner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: var(--ft-color-background-neutral-light);
-  border-bottom: 1px solid var(--ft-color-border-neutral-default);
-}
-
-.home-logo {
-  display: block;
-  height: 56px;
-  width: auto;
-  max-width: 100%;
-}
-
-/* Le logo des clubs se cale sur le bord droit pour que le titre reste centre
-   sur la page, quelle que soit la largeur respective des deux logos. Presque
-   carre, il parait minuscule a hauteur egale du logo horizontal : on le grandit
-   pour que les deux marques pesent autant a l'oeil. */
-.home-logo-clubs {
-  justify-self: end;
-  height: 72px;
-}
-
-/* Taille, police et graisse viennent de .t1 ; on retire seulement sa marge
-   basse, faite pour un titre de page et non pour un bandeau. */
-.home-title {
-  margin: 0;
-  text-align: center;
-  color: var(--ft-color-text-content-strong);
-}
-
+/* Pas de marge ici : la zone d'accueil prend toute la largeur (sa bande teintee
+   va jusqu'aux bords) et gere elle-meme ses marges. */
 .home-main {
-  padding: 2rem 1.5rem;
+  padding: 0;
 }
 
-/* Police, taille et graisse viennent de .t2 : on ne regle que la largeur, calee
-   sur la grille des cartes, l'ecart avec elles et l'encre des autres titres. */
-.home-intro {
-  max-width: 80rem;
-  margin: 0 auto 2.5rem;
-  text-align: center;
+/* Zone d'accueil : espace vertical, marges laterales, et overflow cache pour que
+   les disques decoratifs ne creent jamais de defilement horizontal.
+   Fond et texte sont poses ensemble : la teinte (strip with-bg-blue, du design
+   system) est translucide et se pose sur le blanc du body ; le texte reste en
+   couleur fixe, donc identique en mode clair et en mode sombre de Grist. */
+.home-hero {
+  overflow: hidden;
+  padding: var(--ft-spacer-l1) 1.5rem;
   color: var(--ft-color-text-content-strong);
 }
 
-/* Quatre vignettes par ligne, remplies depuis la gauche : les entrees a venir
-   prendront les places libres sans deplacer les premieres. Les vignettes sont le
-   composant Card link tel quel (illustration a gauche, titre a droite) : la
-   grille ne regle que leur nombre par ligne et la largeur totale. */
-.home-cards {
+/* Bas en courbe : lie a la teinte. En retirant « with-bg-blue » dans le HTML,
+   cette regle ne s'applique plus : on retire la bande ET sa courbe d'un coup. */
+.home-hero.with-bg-blue {
+  border-radius: 0 0 50% 50% / 0 0 var(--ft-spacer-l3) var(--ft-spacer-l3);
+}
+
+/* Une colonne : le texte d'abord, la photo dessous (meme ordre que dans le HTML,
+   donc meme ordre de lecture au clavier et au lecteur d'ecran). */
+.home-content {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  gap: var(--ft-spacer-l1);
+  align-items: center;
   max-width: 80rem;
   margin: 0 auto;
 }
 
-/* Le composant ne laisse que .75rem entre sa decoration et son texte, ecart
-   prevu pour une petite icone : a cote d'une illustration de 64 px, le titre
-   paraissait colle. */
-.home-cards .ds-card-link-body {
-  padding-left: 1.25rem;
-}
-
-/* La ligne d'etat n'existe pas chez le design system. Elle herite de l'encre du
-   corps de carte, qu'il passe au gris quand la carte est desactivee. */
-.home-card-status {
-  margin-top: .5rem;
-  font-size: .875rem;
-}
-.home-card-status:empty { display: none; }
-
-/* Panneau de configuration : il remplace les cartes le temps du reglage, sur le
-   meme fond blanc qu'elles. */
-.home-config {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 1.5rem;
-  background: var(--ft-color-background-neutral-light);
-  border: 1px solid var(--ft-color-border-neutral-default);
-  border-radius: .5rem;
-}
-
-.home-config-title {
+/* Taille et graisse viennent de .display-3 et des classes font-weight-* ;
+   on ne regle que l'encre et l'espace sous le titre (celui de la feuille est remis
+   a zero, l'ecart est pose une seule fois ici). */
+.home-title {
+  margin: 0 0 var(--ft-spacer-m2);
   color: var(--ft-color-text-content-strong);
 }
 
-.home-config-help {
-  color: var(--ft-color-text-content-weak);
+/* Police, taille et graisse viennent de .t2 : on ne regle que l'encre, l'alignement
+   et la marge basse que .t2 ajoute. */
+.home-intro {
+  margin: 0;
+  text-align: left;
+  color: var(--ft-color-text-content-strong);
 }
 
-.home-config-field {
-  margin-bottom: 1rem;
+/* Cadre de la photo : il porte les deux disques decoratifs (::before et ::after).
+   « isolation: isolate » garde les disques (z-index negatif) derriere la photo
+   sans passer derriere le fond de la page. Aucun texte, aucune information. */
+.home-photo-frame {
+  position: relative;
+  isolation: isolate;
 }
 
-.home-config-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .75rem;
-  margin-top: 1.5rem;
+.home-photo-frame::before,
+.home-photo-frame::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  aspect-ratio: 1;
+  border-radius: 50%;
 }
 
-/* Sous cette largeur, quatre cartes en ligne n'auraient plus la place pour
-   leur titre a cote de l'illustration. */
-@media (max-width: 1000px) {
-  .home-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Grand disque, en haut a droite, qui depasse du cadre. */
+.home-photo-frame::before {
+  width: 50%;
+  top: -12%;
+  right: -8%;
+  background: var(--ft-color-background-primary-default);
+}
+
+/* Petit disque pale, en bas a gauche, qui depasse du cadre. */
+.home-photo-frame::after {
+  width: 32%;
+  bottom: -10%;
+  left: -6%;
+  background: var(--ft-color-background-primary-weaker);
+}
+
+/* Petit ecran : hauteur limitee, photo recadree au centre. */
+.home-photo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: var(--ft-radius-default);
+}
+
+/* 768 px est le point « md » du design system. Deux colonnes de meme largeur ;
+   la photo reprend son rapport d'origine, sans recadrage. */
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: 30.9375rem;
+    padding-top: var(--ft-spacer-l4);
+    padding-bottom: var(--ft-spacer-l4);
+    display: flex;
+    align-items: center;
+  }
+  .home-content {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-photo { aspect-ratio: auto; }
+  .home-photo-frame::before { width: 70%; }
+  .home-photo-frame::after { width: 45%; }
 }
 
 @media (max-width: 600px) {
-  .home-banner {
-    grid-template-columns: 1fr 1fr;
-    padding: 1rem;
-  }
-  .home-logo { height: 40px; }
-  .home-logo-clubs { height: 52px; }
-  /* Les deux logos occupent la premiere ligne, le titre passe dessous. */
-  .home-title {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-  .home-main { padding: 1.5rem 1rem; }
-  .home-cards { grid-template-columns: 1fr; gap: 1rem; }
-  .home-config { padding: 1rem; }
+  .home-hero { padding-left: 1rem; padding-right: 1rem; }
 }

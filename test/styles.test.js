@@ -48,7 +48,7 @@ test("l'inventaire du design system est bien charge", () => {
 
 test("la feuille declare bien des classes en tete de selecteur", () => {
   const redefinies = classesRedefinies(CSS);
-  for (const nom of ["home-banner", "home-cards", "home-title"]) {
+  for (const nom of ["home-main", "home-content", "home-intro"]) {
     assert.ok(redefinies.has(nom), `.${nom} doit etre releve par l'analyse`);
   }
 });

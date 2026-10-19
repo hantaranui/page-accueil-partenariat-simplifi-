@@ -37,3 +37,18 @@ for (const widget of widgets) {
     assert.equal(built, assemble(widget), `lancer \`npm run build\` puis commiter ${widget}.html`);
   });
 }
+
+// build.js copie les photos du widget a cote de la page : si la copie manque ou
+// est perimee, l'image ne s'affiche pas en ligne.
+for (const widget of widgets) {
+  const photos = fs.readdirSync(path.join(SRC, widget)).filter((name) => name.endsWith(".jpg"));
+  for (const photo of photos) {
+    test(`${photo} est publiee a cote de ${widget}.html, identique a la source`, () => {
+      const copie = path.join(ROOT, photo);
+      assert.ok(fs.existsSync(copie), `lancer \`npm run build\` : ${photo} absente de la racine`);
+      assert.ok(
+        fs.readFileSync(copie).equals(fs.readFileSync(path.join(SRC, widget, photo))),
+        `lancer \`npm run build\` : ${photo} differe de la source`);
+    });
+  }
+}

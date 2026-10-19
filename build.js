@@ -32,6 +32,13 @@ function buildWidget(widgetDir) {
   const outPath = path.join(__dirname, `${widgetDir}.html`);
   fs.writeFileSync(outPath, output);
   console.log(`build: ${path.relative(__dirname, outPath)}`);
+
+  // Les photos du widget sont publiees a cote de la page : le HTML les appelle
+  // par leur nom (src="photo-accueil.jpg").
+  for (const file of fs.readdirSync(dir).filter((name) => name.endsWith(".jpg"))) {
+    fs.copyFileSync(path.join(dir, file), path.join(__dirname, file));
+    console.log(`build: ${file}`);
+  }
 }
 
 for (const widgetDir of fs.readdirSync(SRC_DIR)) {

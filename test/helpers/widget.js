@@ -12,7 +12,7 @@ const path = require("path");
 const vm = require("vm");
 
 const SCRIPT = path.join(__dirname, "..", "..", "src", "page-accueil", "script.js");
-const EXPORTED = ["state", "TARGETS"];
+const EXPORTED = [];
 
 function makeElement() {
   const attributes = {};
